@@ -1,0 +1,45 @@
+.top-header{
+    border-bottom: 1px solid #E6E4F0;
+    padding-bottom: 20px;
+    .btn-list{
+        padding: 2px 8px;
+        background-color: #ffffff !important;
+        border-color: #E6E4F0;
+        border-radius: 5px;
+        outline-color: #E6E4F0;
+        font-size: 14px;
+        font-weight: 600;
+        color: #82808F;
+        margin-top:6px;
+        img{
+            width: 22px;
+        }
+    }
+.form-btn-wrap{
+    display: flex;
+    justify-content: end;
+    gap:24px;
+    a{
+        text-decoration: none;
+    }
+}
+ .btn-create-task{
+    background: rgba(76, 103, 133, 0.9);
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 10px 16px;
+    letter-spacing: 0.5px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    svg{
+        stroke-width: 0.8px;
+        font-size: 18px
+    }
+ }
+}
+a{
+    text-decoration: none;
+}

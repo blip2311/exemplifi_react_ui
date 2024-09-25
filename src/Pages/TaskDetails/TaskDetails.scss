@@ -1,0 +1,35 @@
+.task-deatils-wrap{
+    padding-top: 24px;
+  
+    
+}
+
+table{
+    tr{
+        display: flex;
+        align-items: center;
+        padding: 8px 0;
+    }
+   th{
+    display: flex;
+        align-items: center;
+        gap:8px;
+        width: 160px;
+        font-size: 16px;
+        font-weight: 500;
+        color: rgba(71, 84, 103, 0.9);
+   }
+   td{
+    display: flex;
+        font-size: 16px;
+        font-weight: 600;
+        color: rgba(71, 84, 103, 0.9);
+   }
+   
+}
+.heading {
+    font-size: 22px;
+    color: #475467;
+    padding-bottom: 16px;
+    border-bottom: 1px solid rgba(217, 217, 217, 0.8);
+}

@@ -1,0 +1,16 @@
+@import '~bootstrap/scss/bootstrap';
+@import '././Pages/Home/Home.scss';
+@import '././Pages/TaskDetails/TaskDetails.scss';
+.content-wrapper{
+  margin-left: 257px;
+  padding: 28px 48px 28px 24px;
+}
+.App-link {
+  color: #61dafb;
+}
+@media screen and (max-width:768px) {
+  .content-wrapper{
+    margin-left: 0;
+    padding: 28px 24px 28px 24px;
+  }
+}

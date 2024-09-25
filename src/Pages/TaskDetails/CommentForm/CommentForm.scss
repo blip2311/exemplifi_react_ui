@@ -1,0 +1,16 @@
+.comment-list{
+    padding-left: 0 ;
+    li{
+        list-style-type: none;
+        border-bottom: 1px solid rgba(76, 103, 133, 0.5);
+        display: inline-flex;
+        gap: 4px;
+        color: #9D9BA1;
+        font-family: 14px;
+        font-weight: 600;
+        margin-bottom: 16px;
+        span{
+            color: #4C6785E5;
+        }
+    }
+}

@@ -1,0 +1,48 @@
+.site-nav{
+  width: 257px;
+  height: 100vh;
+  background: #ffffff;
+  border-right:1px solid #E6E4F0;
+  padding: 28px 20px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  .sidebar-nav{
+    padding-left: 0;
+    padding: 36px 0;
+    border-bottom:1px solid #E6E4F0;
+    .nav-link{
+        text-align: left;
+        a{
+            display: flex;
+            align-items: center;
+            gap: 16px;  
+            font-weight: 600;
+            color: rgba(49, 68, 89, 0.9);
+            padding: 8px 16px;
+            text-decoration: none;
+        }
+       
+    }
+  }
+  .nav-brand{
+    text-decoration: none;
+    color: #3F5773;
+    font-weight: 600;
+    font-size: 18px;
+    display: flex;
+    gap: 16px;
+    align-items: center;
+  }
+}
+@media  (max-width:768px) {
+  .site-nav{
+    left: -257px;
+    transition: all 0.3s ease-in-out ;
+    &.open{
+      left: 0;
+    }
+  }
+
+}

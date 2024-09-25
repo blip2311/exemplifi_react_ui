@@ -28,6 +28,7 @@ const CommentForm = () => {
 
   return (
     <>
+     
       <form className="comment-form" onSubmit={handleSubmit}>
         <div className="col-12 col-md-4 mb-3">
           <input
@@ -53,18 +54,21 @@ const CommentForm = () => {
           ></textarea>
         </div>
 
-        <button type="submit" className="btn btn-secondary px-4">
+        <button type="submit" className="btn btn-secondary px-4 mt-2 mb-4">
           Submit
         </button>
       </form>
-
+       <hr></hr>
       {/* Display the list of comments */}
       <ul className="comment-list mt-4">
         {comments.map((commentItem, index) => (
           <li key={index}>
             <span>{commentItem.name}</span> {commentItem.comment}
           </li>
+          
         ))}
+        <li><span>Vivek</span> Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin</li>
+        <li><span>Vivek</span> Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin</li>
       </ul>
     </>
   );

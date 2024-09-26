@@ -60,6 +60,7 @@ const CommentForm = () => {
       </form>
        <hr></hr>
       {/* Display the list of comments */}
+      <h4>Comments</h4>
       <ul className="comment-list mt-4">
         {comments.map((commentItem, index) => (
           <li key={index}>

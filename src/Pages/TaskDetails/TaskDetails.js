@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { FaRegClock, FaStarHalfAlt} from "react-icons/fa";
-import { taskData } from "../../Data";
+import { FaRegClock, FaStarHalfAlt } from "react-icons/fa";
 import "./TaskDetails.scss";
 import CommentForm from "./CommentForm/CommentForm";
+
 const CardDetails = () => {
   const { id } = useParams(); 
 
@@ -12,14 +12,22 @@ const CardDetails = () => {
     title: "",
     date: "",
     status: "",
+    description: "",
   });
+
   useEffect(() => {
-    const fetchTaskDetails = async (id) => {
-    
-        setTaskDetails(taskData[id] || {});
-    
+    const fetchTaskDetails = async () => {
+      try {
+        const response = await fetch("/Data.json");
+        const data = await response.json();
+        const task = data.find((task) => task.id === parseInt(id));
+        setTaskDetails(task || {});
+      } catch (error) {
+        console.error("Error fetching task data:", error);
+      }
     };
-    fetchTaskDetails(id);
+
+    fetchTaskDetails();
   }, [id]);
 
   return (
@@ -30,6 +38,7 @@ const CardDetails = () => {
             <h1 className="heading">{taskDetails.title}</h1>
 
             <table>
+              <tbody>
                 <tr>
                   <th>
                     <FaRegClock /> Created At
@@ -44,6 +53,7 @@ const CardDetails = () => {
                     <span className="status">{taskDetails.status}</span>
                   </td>
                 </tr>
+              </tbody>
             </table>
 
             <h4 className="mt-4">Description</h4>

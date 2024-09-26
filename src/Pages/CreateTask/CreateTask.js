@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import "./CreateTask.scss";
 import TopHeader from "../../Layout/Header/TopHeader";
-import { addTaskData } from "../../Data"; // Import the function from Data.js
 
 export const CreateTask = () => {
   const [formData, setFormData] = useState({
@@ -11,6 +10,13 @@ export const CreateTask = () => {
     description: ""
   });
   const [popupVisible, setPopupVisible] = useState(false); // State for popup visibility
+
+  // Load tasks from local storage on component mount
+  const loadTasks = () => {
+    const savedTasks = localStorage.getItem('tasks');
+    return savedTasks ? JSON.parse(savedTasks) : [];
+  };
+
   // Handler for form input changes
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -23,20 +29,33 @@ export const CreateTask = () => {
   // Handler for form submission
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Submit form data to Data.js
-    addTaskData({
+
+    // Get current tasks from local storage
+    const tasks = loadTasks();
+    
+    // Add the new task
+    const newTask = {
       title: formData.title,
       status: formData.status,
       date: formData.dueDate,
       description: formData.description
-    });
-    console.log("Form Submitted:", formData);
+    };
+    
+    // Save the updated tasks back to local storage
+    tasks.push(newTask);
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+    
+    // Log the tasks in JSON format
+    console.log("Tasks in JSON format:", JSON.stringify(tasks, null, 2)); // Pretty print with 2 spaces
+
+    // Reset form data
     setFormData({
       title: '',
       status: '',
       dueDate: '',
       description: ''
     });
+    
     // Show the popup
     setPopupVisible(true);
     
@@ -58,9 +77,7 @@ export const CreateTask = () => {
         <h4 className="mb-4 form-heading">Create Task</h4>
         <div className="row">
           <div className="col-12 col-md-6 mb-3">
-            <label htmlFor="title" className="form-label">
-              Title
-            </label>
+            <label htmlFor="title" className="form-label">Title</label>
             <input
               type="text"
               className="form-control"
@@ -72,9 +89,7 @@ export const CreateTask = () => {
             />
           </div>
           <div className="col-12 col-md-6 mb-3">
-            <label htmlFor="filter-with-status" className="form-label">
-              Select Status
-            </label>
+            <label htmlFor="filter-with-status" className="form-label">Select Status</label>
             <select
               className="form-select"
               name="status"
@@ -83,9 +98,7 @@ export const CreateTask = () => {
               onChange={handleChange}
               required
             >
-              <option value="" disabled>
-                Select status
-              </option>
+              <option value="" disabled>Select status</option>
               <option value="In Progress">In Progress</option>
               <option value="Todo">Todo</option>
               <option value="Completed">Completed</option>
@@ -94,9 +107,7 @@ export const CreateTask = () => {
             </select>
           </div>
           <div className="col-12 col-md-6 mb-3">
-            <label htmlFor="dueDate" className="form-label">
-              Due Date
-            </label>
+            <label htmlFor="dueDate" className="form-label">Due Date</label>
             <input
               type="date"
               id="dueDate"
@@ -108,9 +119,7 @@ export const CreateTask = () => {
             />
           </div>
           <div className="col-12 mb-4">
-            <label htmlFor="description" className="form-label">
-              Description
-            </label>
+            <label htmlFor="description" className="form-label">Description</label>
             <textarea
               className="form-control"
               id="description"
@@ -123,11 +132,8 @@ export const CreateTask = () => {
           </div>
         </div>
 
-        <button type="submit" className="btn btn-secondary px-4">
-          Submit
-        </button>
+        <button type="submit" className="btn btn-secondary px-4">Submit</button>
       </form>
-      
     </main>
   );
 };

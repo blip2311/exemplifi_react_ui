@@ -1,10 +1,34 @@
-import React, { useState } from "react";
-import { taskData } from "../../Data";
+import React, { useState, useEffect } from "react";
 
 export const FilterForm = () => {
   // State for the selected date and status
   const [selectedDate, setSelectedDate] = useState('');
   const [selectedStatus, setSelectedStatus] = useState('');
+
+  // State to store fetched data
+  const [taskData, setTaskData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  // Fetch data from Data.json on component mount
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch("/Data.json");
+        if (!response.ok) {
+          throw new Error("Failed to fetch data");
+        }
+        const data = await response.json();
+        setTaskData(data);
+      } catch (error) {
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   // Get unique dates and statuses from taskData
   const uniqueDates = [...new Set(taskData.map(card => card.date))];
@@ -18,6 +42,14 @@ export const FilterForm = () => {
   const handleStatusChange = (e) => {
     setSelectedStatus(e.target.value);
   };
+
+  if (loading) {
+    return <p>Loading...</p>;
+  }
+
+  if (error) {
+    return <p>Error: {error}</p>;
+  }
 
   return (
     <form className="filter-form">

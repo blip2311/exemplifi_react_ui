@@ -1,3 +1,20 @@
+# Project Origin and API Integration
+
+This project is a derived project of [Exemplifi/Laravel-Task](https://github.com/Exemplifi/Laravel-Task).
+
+The changes in this repository were made to accommodate live API calls to the application in the repository [blip2311/exemplifi_assignment](https://github.com/blip2311/exemplifi_assignment).
+
+## API Configuration
+
+In order for this project to work with the backend at `blip2311/exemplifi_assignment`, you must create a `.env` file in the root directory of this project and add the following entry:
+
+```
+REACT_APP_API_BASE_URL=http://localhost:8000
+```
+
+Or set it to the exact URL where the `blip2311/exemplifi_assignment` application is being served.
+
+This will enable the frontend to make live API calls to the backend.
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

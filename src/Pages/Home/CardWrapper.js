@@ -1,6 +1,4 @@
-import React, { useEffect, useState } from "react";
 import CardComponent from "./TaskCard";
-import { getRouteAsync } from "../../Utils/routeHelper";
 
 export const CardWrapper = ({ taskData }) => {
   // const [taskData, setTaskData] = useState(tasks);

@@ -1,38 +1,30 @@
 import React, { useState, useEffect } from "react";
 
-export const FilterForm = () => {
+export const FilterForm = ({ taskData, getTasks }) => {
   // State for the selected date and status
-  const [selectedDate, setSelectedDate] = useState('');
-  const [selectedStatus, setSelectedStatus] = useState('');
+  const [selectedDate, setSelectedDate] = useState("");
+  const [selectedStatus, setSelectedStatus] = useState("");
 
   // State to store fetched data
-  const [taskData, setTaskData] = useState([]);
-  const [loading, setLoading] = useState(true);
+  // const [taskData, setTaskData] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
   // Fetch data from Data.json on component mount
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch("/Data.json");
-        if (!response.ok) {
-          throw new Error("Failed to fetch data");
-        }
-        const data = await response.json();
-        setTaskData(data);
-      } catch (error) {
-        setError(error.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, []);
+    setLoading(true);
+    try {
+      getTasks(selectedStatus, selectedDate);
+    } catch (error) {
+      setError(error.message);
+    } finally {
+      setLoading(false);
+    }
+  }, [selectedDate, selectedStatus]);
 
   // Get unique dates and statuses from taskData
-  const uniqueDates = [...new Set(taskData.map(card => card.date))];
-  const uniqueStatuses = [...new Set(taskData.map(card => card.status))];
+  const uniqueDates = [...new Set(taskData.map((card) => card.due_date))];
+  const uniqueStatuses = [...new Set(taskData.map((card) => card.status))];
 
   // Handlers for select changes
   const handleDateChange = (e) => {
@@ -54,7 +46,7 @@ export const FilterForm = () => {
   return (
     <form className="filter-form">
       <h6>Filter By</h6>
-      
+
       <div className="input-group">
         <label htmlFor="filter-with-date" className="select-label">
           Due Date
@@ -66,13 +58,17 @@ export const FilterForm = () => {
           value={selectedDate}
           onChange={handleDateChange}
         >
-          <option value="" disabled>Select Date</option>
+          <option value="" disabled>
+            Select Date
+          </option>
           {uniqueDates.map((date, index) => (
-            <option key={index} value={date}>{date}</option>
+            <option key={index} value={date}>
+              {date}
+            </option>
           ))}
         </select>
       </div>
-      
+
       <div className="input-group">
         <label htmlFor="filter-with-status" className="select-label">
           Status
@@ -84,9 +80,13 @@ export const FilterForm = () => {
           value={selectedStatus}
           onChange={handleStatusChange}
         >
-          <option value="" disabled>Select Status</option>
+          <option value="" disabled>
+            Select Status
+          </option>
           {uniqueStatuses.map((status, index) => (
-            <option key={index} value={status}>{status}</option>
+            <option key={index} value={status}>
+              {status}
+            </option>
           ))}
         </select>
       </div>

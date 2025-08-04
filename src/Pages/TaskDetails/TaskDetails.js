@@ -3,14 +3,16 @@ import { useParams } from "react-router-dom";
 import { FaRegClock, FaStarHalfAlt } from "react-icons/fa";
 import "./TaskDetails.scss";
 import CommentForm from "./CommentForm/CommentForm";
+// Import getRouteAsync if it's exported from a utility file
+import { getRouteAsync } from "../../Utils/routeHelper";
 
 const CardDetails = () => {
-  const { id } = useParams(); 
+  const { id } = useParams();
 
   // State to hold task details
   const [taskDetails, setTaskDetails] = useState({
     title: "",
-    date: "",
+    due_date: "",
     status: "",
     description: "",
   });
@@ -18,10 +20,19 @@ const CardDetails = () => {
   useEffect(() => {
     const fetchTaskDetails = async () => {
       try {
-        const response = await fetch("/Data.json");
-        const data = await response.json();
-        const task = data.find((task) => task.id === parseInt(id));
-        setTaskDetails(task || {});
+        getRouteAsync("tasks.index").then(async (routeObject) => {
+          const url = routeObject.url;
+          const response = await fetch(url, { method: routeObject.methods[0] });
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+          const jsonData = await response.json();
+          // const response = await fetch("/Data.json");
+          // const data = await response.json();
+          const task = jsonData.data.find((task) => task.id === parseInt(id));
+          console.log(task);
+          setTaskDetails(task || {});
+        });
       } catch (error) {
         console.error("Error fetching task data:", error);
       }
@@ -43,7 +54,7 @@ const CardDetails = () => {
                   <th>
                     <FaRegClock /> Created At
                   </th>
-                  <td>{taskDetails.date}</td>
+                  <td>{taskDetails.due_date}</td>
                 </tr>
                 <tr>
                   <th>
@@ -60,9 +71,8 @@ const CardDetails = () => {
             <p>{taskDetails.description}</p>
 
             <h6 className="mt-4">Add Comment</h6>
-            
-            <CommentForm />
-            
+
+            <CommentForm id={id} />
           </div>
         </div>
       </div>
